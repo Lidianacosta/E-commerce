@@ -4,17 +4,12 @@
     "files.autoSave": "off",
     "explorer.compactFolders": false,
     "editor.renderWhitespace": "all",
-
     "python.defaultInterpreterPath": "./venv/bin/python",
-
-
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8",
         "editor.formatOnSave": true,
-
     },
     "editor.formatOnSave": true,
-
     "python.analysis.autoImportCompletions": true,
     "python.analysis.typeCheckingMode": "basic",
     "emmet.includeLanguages": {

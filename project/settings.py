@@ -31,6 +31,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://localhost:8000/', 'https://127.0.0.1/',
+    'https://redesigned-computing-machine-447q45qpgg6f556r-8000.app.github.dev/',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,7 +50,7 @@ INSTALLED_APPS = [
     'perfil',
     'produto',
 
-    # TODO: Remover debug toolnar
+    # TODO: Remover debug toolbar
     'debug_toolbar',
 ]
 
@@ -58,7 +63,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
-    # TODO: Remover debug toolnar
+    # TODO: Remover debug toolbar
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
@@ -161,7 +166,7 @@ SESSION_SAVE_EVERY_REQUEST = False
 # SESSION_ENGINE = "django.contrib.sessions.backends.file"
 # SESSION_FILE_PATH = '/home/luizotavio/Desktop/temp'
 
-# TODO: Remover debug toolnar
+# TODO: Remover debug toolbar
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
@@ -169,12 +174,7 @@ INTERNAL_IPS = [
 ]
 
 
-
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
