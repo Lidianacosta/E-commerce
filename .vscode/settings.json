@@ -2,6 +2,7 @@
     "workbench.colorTheme": "Dracula Soft",
     "workbench.iconTheme": "material-icon-theme",
     "files.autoSave": "off",
+    "editor.wordWrap": "on",
     "explorer.compactFolders": false,
     "editor.renderWhitespace": "all",
     "python.defaultInterpreterPath": "./venv/bin/python",
