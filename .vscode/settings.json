@@ -3,6 +3,7 @@
     "workbench.iconTheme": "material-icon-theme",
     "files.autoSave": "off",
     "editor.wordWrap": "on",
+    "editor.guides.bracketPairs": true,
     "explorer.compactFolders": false,
     "editor.renderWhitespace": "all",
     "python.defaultInterpreterPath": "./venv/bin/python",

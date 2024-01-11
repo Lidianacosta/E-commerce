@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, View
+from django.views.generic import ListView, View, DetailView
 from .models import Produto
 # Create your views here.
 
@@ -13,8 +13,9 @@ class ListaProdutoListView(ListView):
     paginate_by = PER_PAGE
 
 
-class DetalheProdutoView(View):
-    pass
+class DetalheProdutoDetailView(DetailView):
+    model = Produto
+    template_name = 'produto/detalhe.html'
 
 
 class AdicionarAoCarrinhoView(View):
