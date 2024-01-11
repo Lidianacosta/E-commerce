@@ -1,10 +1,16 @@
 from django.shortcuts import render
 from django.views.generic import ListView, View
+from .models import Produto
 # Create your views here.
+
+PER_PAGE = 9
 
 
 class ListaProdutoListView(ListView):
-    pass
+    model = Produto
+    template_name = 'produto/lista.html'
+    context_object_name = 'produtos'
+    paginate_by = PER_PAGE
 
 
 class DetalheProdutoView(View):

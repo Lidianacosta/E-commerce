@@ -3,7 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
 from PIL import Image
-
+from utils.formata_preco import formata_preco
 # Create your models here.
 
 
@@ -33,11 +33,11 @@ class Produto(models.Model):
     )
 
     def get_preco_formatado(self):
-        return f'R${self.preco_marketing:.2f}'.replace('.', ',')
+        return formata_preco(self.preco_marketing)
     get_preco_formatado.short_description = 'Preço'
 
     def get_preco_promocional_formatado(self):
-        return f'R${self.preco_marketing:.2f}'.replace('.', ',')
+        return formata_preco(self.preco_marketing_promocional)
     get_preco_promocional_formatado.short_description = 'Preço promocional'
 
     @staticmethod
