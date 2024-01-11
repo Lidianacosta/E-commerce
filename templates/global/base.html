@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    {% include "partials/_head.html" %}
+    <title>
+        {% block title %}Hello, world!{% endblock title %}
+    </title> 
+</head>
+
+<body>
+    {% include "partials/_nav.html" %}
+    <main class="container mt-4 mb-4">
+        {% include "partials/_messages.html" %}
+        {% block content %}{% endblock content %}
+        {% include "partials/_pagination.html" %}
+    </main>
+
+    {% include "partials/_footer.html" %}
+
+</body>
+
+</html>
