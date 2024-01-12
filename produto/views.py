@@ -80,7 +80,7 @@ class AdicionarAoCarrinhoView(View):
                 'preco_quantitativo_promocional': preco_unitario_promocional,
                 'quantidade': 1,
                 'slug': produto.slug,
-                'imagem': produto.imagem.name if produto.imagem else '',
+                'imagem': produto.imagem.url if produto.imagem else '',
             }
 
         self.request.session.save()
@@ -94,12 +94,40 @@ class AdicionarAoCarrinhoView(View):
 
 
 class RemoverDoCarrinhoView(View):
-    pass
+    def get(self, *args, **kwargs):
+
+        http_referer = self.request.META.get(
+            'HTTP_REFERER', reverse('produto:lista')
+        )
+
+        carrinho = self.request.session.get('carrinho')
+        if not carrinho:
+            return redirect(http_referer)
+
+        variacao_id = self.request.GET.get('vid')
+        if not variacao_id:
+            return redirect(http_referer)
+
+        if variacao_id not in carrinho:
+            return redirect(http_referer)
+
+        messages.success(
+            self.request,
+            f'Poduto {carrinho[variacao_id]["produto_nome"]}'
+            f' - {carrinho[variacao_id]["variacao_nome"]} removido do seu carrinho'
+            if carrinho[variacao_id]["variacao_nome"]
+            else f'Poduto {carrinho[variacao_id]["produto_nome"]} removido do seu carrinho'
+        )
+
+        del self.request.session['carrinho'][variacao_id]
+        self.request.session.save()
+        return redirect(http_referer)
 
 
 class CarrinhoView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        return render(request, 'produto/carrinho.html')
 
 
-class FinalizarView(View):
+class ResumoDaCompra(View):
     pass

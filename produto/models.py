@@ -3,7 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
 from PIL import Image
-from utils.formata_preco import formata_preco
+from utils.utils import formata_preco
 # Create your models here.
 
 

@@ -1,3 +1,4 @@
+{% load filters %}
 <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
     <a class="navbar-brand" href="{% url 'produto:lista' %}">E-commerce</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -14,8 +15,8 @@
                 <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     Dropdown
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -28,19 +29,21 @@
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
+            {% if request.session.carrinho|carrinho_quantidade_total %}
             <li class="nav-item">
-                <a class="nav-link nav-cart-link active" href="#">
+                <a class="nav-link nav-cart-link active" href="{% url 'produto:carrinho' %}">
                     <span class="nav-cart-text mr-1">
                         Carrinho
                     </span>
                     <span class="nav-cart-count mr-1">
-                        <strong>109x</strong>
+                        <strong>{{ request.session.carrinho|carrinho_quantidade_total }}x</strong>
                     </span>
                     <span class="nav-cart-icon mr-2">
                         <i class="fas fa-shopping-cart"></i>
                     </span>
                 </a>
             </li>
+            {% endif %}
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

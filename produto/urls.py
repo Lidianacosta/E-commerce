@@ -12,6 +12,7 @@ urlpatterns = [
     path('remover-do-carrinho/', views.RemoverDoCarrinhoView.as_view(),
          name='remover_do_carrinho'),
     path('carrinho/', views.CarrinhoView.as_view(), name='carrinho'),
-    path('finalizar/', views.FinalizarView.as_view(), name='finalizar'),
+    path('resumo-da-compra/', views.ResumoDaCompra.as_view(),
+         name='resumo_da_compra'),
 
 ]
