@@ -18,7 +18,7 @@ class Produto(models.Model):
     imagem = models.ImageField(
         upload_to="produto_imagens/%Y/%m", blank=True, null=True
     )
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     preco_marketing = models.FloatField(verbose_name='Preço')
     preco_marketing_promocional = models.FloatField(
         default=0, verbose_name="Preço Promocional"
@@ -64,7 +64,7 @@ class Produto(models.Model):
     def save(self, *args, **kwargs) -> None:
 
         if not self.slug:
-            self.slug = {slugify(self.nome)}
+            self.slug = slugify(self.nome)
 
         super().save(*args, **kwargs)
 

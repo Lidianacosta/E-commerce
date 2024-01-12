@@ -34,7 +34,7 @@
                                 <div class="form-group">
                                     <select id="select-variacoes" name="vid" class="form-control form-control-lg">
                                         {% for variacao in produto.variacao_set.all %}
-                                                <option data-preco="{{variacao.preco|formata_preco}}" data-preco-promocional="{{variacao.preco_promocional|formata_preco}}" value=" {{variacao.id}}">{{variacao}}</option>
+                                                <option data-preco="{{variacao.preco|formata_preco}}" data-preco-promocional="{{variacao.preco_promocional|formata_preco}}" value="{{variacao.id}}">{{variacao}}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
