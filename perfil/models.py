@@ -2,7 +2,6 @@ import re
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ValidationError
-
 from utils.valida_cpf import valida_cpf
 
 # Create your models here.
@@ -70,7 +69,7 @@ class PerfilUsuario(models.Model):
 
         if not re.search(r'^[0-9]{0,}$', self.cep):
             error_messages.update({
-                'cpf': 'Cep inválido, digite os 8 digitos do CEP',
+                'cep': 'CEP inválido, digite os 8 digitos do CEP',
             })
 
         if error_messages:

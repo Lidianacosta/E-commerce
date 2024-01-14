@@ -30,9 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 CSRF_TRUSTED_ORIGINS = [
-    'https://localhost:8000/', 'https://127.0.0.1/',
+    'https://*.localhost:8000/', 'https://*.127.0.0.1',
     'https://redesigned-computing-machine-447q45qpgg6f556r-8000.app.github.dev/',
 ]
 
@@ -49,10 +48,15 @@ INSTALLED_APPS = [
     'pedido',
     'perfil',
     'produto',
+    'crispy_forms',
+    "crispy_bootstrap4",
 
     # TODO: Remover debug toolbar
     'debug_toolbar',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
