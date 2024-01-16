@@ -13,6 +13,7 @@ class ListaProdutoListView(ListView):
     template_name = 'produto/lista.html'
     context_object_name = 'produtos'
     paginate_by = PER_PAGE
+    ordering = 'nome'
 
 
 class DetalheProdutoDetailView(DetailView):
@@ -48,6 +49,7 @@ class AdicionarAoCarrinhoView(View):
         preco_unitario = variacao.preco
         preco_unitario_promocional = variacao.preco_promocional
         produto = variacao.produto
+        imagem = produto.imagem.url if produto.imagem else ''
 
         if variacao_id in carrinho:  # type:ignore
             quantidade_carrinho = carrinho[variacao_id]['quantidade']
@@ -67,7 +69,6 @@ class AdicionarAoCarrinhoView(View):
                 quantidade_carrinho
             carrinho[variacao_id]['preco_quantitativo_promocional'] = preco_unitario_promocional * \
                 quantidade_carrinho
-
         else:
             carrinho[variacao_id] = {
                 "produto_id": produto.pk,
@@ -80,16 +81,22 @@ class AdicionarAoCarrinhoView(View):
                 'preco_quantitativo_promocional': preco_unitario_promocional,
                 'quantidade': 1,
                 'slug': produto.slug,
-                'imagem': produto.imagem.url if produto.imagem else '',
+                'imagem': imagem
             }
 
         self.request.session.save()
         messages.success(
             self.request,
-            f'Produto {produto.nome} - {variacao.nome} adicionado ao seu carrinho '
+            f'Produto {produto.nome} - {variacao.nome}'
+            ' adicionado ao seu carrinho'
+            f'{carrinho[variacao_id]["quantidade"]}x'
+            if variacao.nome
+            else f'Produto {produto.nome}'
+            ' adicionado ao seu carrinho '
             f'{carrinho[variacao_id]["quantidade"]}x'
 
         )
+
         return redirect(http_referer)
 
 
@@ -130,4 +137,11 @@ class CarrinhoView(View):
 
 
 class ResumoDaCompra(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('perfil:criar')
+
+        context = {
+            'usuario': request.user,
+        }
+        return render(request, 'produto/resumo_da_compra.html', context)

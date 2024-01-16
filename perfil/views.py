@@ -1,11 +1,11 @@
 import copy
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
-from django.contrib import auth
 from django.contrib.auth.models import User
-from django.contrib import messages
-from .forms import UserForm, PerfilForm
+from django.contrib import auth
 from .models import PerfilUsuario
+from .forms import UserForm, PerfilForm
 # Create your views here.
 
 
@@ -53,6 +53,11 @@ class BasePerfil(View):
 class CriarView(BasePerfil):
     def post(self, *args, **kwargs):
         if not self.user_form.is_valid() or not self.perfil_form.is_valid():
+            messages.error(
+                self.request,
+                'Existem erros no formulário de cadastro. Verifique se todos '
+                'os campos foram preenchidos corretamente.'
+            )
             return self.renderizar
 
         username = self.user_form.cleaned_data.get('username')
@@ -110,7 +115,7 @@ class CriarView(BasePerfil):
             self.request,
             'Você fez login e pode concluir sua compra'
         )
-        return redirect('perfil:criar')
+        return redirect('produto:carrinho')
 
 
 class LoginView(View):
