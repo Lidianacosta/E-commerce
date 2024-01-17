@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, View, DetailView
 from django.contrib import messages
+from perfil.models import PerfilUsuario
 from .models import Produto, Variacao
 # Create your views here.
 
@@ -141,7 +142,13 @@ class ResumoDaCompra(View):
         if not request.user.is_authenticated:
             return redirect('perfil:criar')
 
-        context = {
-            'usuario': request.user,
-        }
-        return render(request, 'produto/resumo_da_compra.html', context)
+        perfil = PerfilUsuario.objects.filter(user=request.user).exists()
+        if not perfil:
+            messages.error(request, 'Usuário sem perfil.')
+            return redirect('perfil:criar')
+
+        if not request.session.get('carrinho'):
+            messages.warning(request, 'Seu carrinho está vazio.')
+            return redirect('produto:lista')
+
+        return render(request, 'produto/resumo_da_compra.html', context={'usuario': request.user, })
