@@ -10,6 +10,7 @@ class Pedido(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total = models.FloatField()
+    quantidade_total = models.PositiveIntegerField()
     status = models.CharField(
         max_length=1,
         default='A',
