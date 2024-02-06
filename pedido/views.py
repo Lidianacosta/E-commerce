@@ -1,31 +1,34 @@
-from django.shortcuts import redirect
-from django.views.generic import View, DetailView
+from django.shortcuts import render, redirect
+from django.views.generic import View, ListView, DetailView
 from django.contrib import messages
+from django.http import Http404
 from django.urls import reverse
 from produto.models import Variacao
 from utils import utils
 
 from .models import Pedido, ItemPedido
 
+PER_PAGE = 5
+
 # Create your views here.
 
 
-class DispatchLogin(View):
+class DispatchLoginMixin(View):
     def dispatch(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             messages.error(self.request, "Você precisa fazer login.")
             return redirect('perfil:criar')
         return super().dispatch(*args, **kwargs)
 
-
-class PagarView(DispatchLogin, DetailView):
-    template_name = 'pedido/pagar.html'
-    model = Pedido
-
     def get_queryset(self, *args, **kwargs):
         pedido = super().get_queryset(*args, **kwargs)
         pedido = pedido.filter(user=self.request.user)
         return pedido
+
+
+class PagarView(DispatchLoginMixin, DetailView):
+    template_name = 'pedido/pagar.html'
+    model = Pedido
 
 
 class FecharPedidoView(View):
@@ -110,5 +113,14 @@ class FecharPedidoView(View):
         return redirect(reverse('pedido:pagar', kwargs={'pk': pedido.pk}))
 
 
-class DetalheView(View):
-    pass
+class DetalheView(DispatchLoginMixin, DetailView):
+    model = Pedido
+    template_name = 'pedido/detalhe.html'
+
+
+class ListaView(DispatchLoginMixin, ListView):
+    model = Pedido
+    context_object_name = 'pedidos'
+    template_name = 'pedido/lista.html'
+    paginate_by = PER_PAGE
+    ordering = '-id'
